@@ -81,13 +81,11 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 
 
 
-	@Override
 	public int noOfNodes() {
 		zugriffe++;
 		return accessMap.size();
 	}
 
-	@Override
 	public List<Nachbar> neighbors(String ecke) {
 		ArrayList<Nachbar> result = new ArrayList<Nachbar>();
 		
@@ -111,7 +109,6 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 		return result;
 	}
 
-	@Override
 	public Set<String> allNodes() {
 		zugriffe++;
 		return accessMap.keySet();
@@ -177,8 +174,6 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 		this.adjMatrix[i][j]=val;
 	}
 
-
-	@Override
 	public Graph[] floydWarshall() {
 		AdjMatrix distance = new AdjMatrix(einleseString.split(";"), einleseString); //init distance-Matrix
 		AdjMatrix v =  new AdjMatrix(einleseString.split(";"), einleseString);//init transitmatrix

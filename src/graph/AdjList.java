@@ -134,7 +134,6 @@ public class AdjList extends AbstractGraph implements Graph  {
 		return Graphs.adjMatrix(einleseString);
 	}
 
-	@Override
 	public Graph[] floydWarshall() {
 		return this.toAdjMatrix().floydWarshall();
 	}
