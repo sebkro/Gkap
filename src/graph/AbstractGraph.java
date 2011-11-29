@@ -15,6 +15,9 @@ public abstract class AbstractGraph implements Graph {
 		if(Graphs.trenner(s).equals("Error")) return false;
 		return true;
 	}
+	
+	protected abstract void insert(String s, String s2, double d);
+	protected abstract void changeCapacity(String s, String s2, double d);
 
 	public Map<String,Integer> bfs(String start){
 		if(!(this.allNodes().contains(start))) return null;

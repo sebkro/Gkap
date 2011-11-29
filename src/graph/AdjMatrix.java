@@ -218,10 +218,16 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 		this.zugriffe += v.getZugriffe();
 		this.zugriffe += distance.getZugriffe();
 		return result;
-		
-		
-		
-		
+	}
+	
+	protected void insert(String from, String to, double val){
+		setMatrixElem(accessMap.get(from), accessMap.get(to), val);
+	}
+	
+	protected void changeCapacity(String from, String to, double value){
+		if(accessMap.containsKey(from) && accessMap.containsKey(to)){
+			setMatrixElem(accessMap.get(from), accessMap.get(to), value);
+		}
 	}
 
 
