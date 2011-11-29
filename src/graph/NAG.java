@@ -53,4 +53,16 @@ public class NAG implements Graph{
 		return x;
 	}
 	
+	public void deleteZeroEdges(){
+		
+	}
+	public void insert(String s, String s2, double d) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void changeCapacity(String s, String s2, double d) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

@@ -220,13 +220,30 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 		return result;
 	}
 	
-	protected void insert(String from, String to, double val){
+	public void insert(String from, String to, double val){
 		setMatrixElem(accessMap.get(from), accessMap.get(to), val);
 	}
 	
-	protected void changeCapacity(String from, String to, double value){
+	public void changeCapacity(String from, String to, double value){
 		if(accessMap.containsKey(from) && accessMap.containsKey(to)){
 			setMatrixElem(accessMap.get(from), accessMap.get(to), value);
+		}
+	}
+	
+	
+	/*Entferne alle Kanten mit einer Geiwchtung von 0
+	* Notwendig fuer ResidualgraphenAlgorithmus,
+	* da in diesem 0 Kanten fuer nicht vorhandene Kanten stehen
+	*/
+	public void deleteZeroEdges(){
+		int size = accessMap.size();
+		
+		for(int i = 0; i < size; i++){
+			for(int j = 0; j < size; j++){
+				if(getMatrixElem(i, j) == 0){
+					setMatrixElem(i, j, Double.POSITIVE_INFINITY);
+				}
+			}
 		}
 	}
 

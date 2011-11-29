@@ -45,7 +45,7 @@ public class AdjList extends AbstractGraph implements Graph  {
 	/*
 	 * fuegt einen Eintrag in den internMap ein
 	 */
-	protected void insert(String first, String second, double weight){
+	public void insert(String first, String second, double weight){
 		if(internMap.containsKey(first)){
 			internMap.get(first).add(nachbar(second,weight));
 		}
@@ -66,7 +66,7 @@ public class AdjList extends AbstractGraph implements Graph  {
 		}
 	}
 	
-	protected void changeCapacity(String from, String to, double capacity){
+	public void changeCapacity(String from, String to, double capacity){
 		if(internMap.containsKey(from)){
 			List<Nachbar> n = internMap.get(from);
 			for(Nachbar elem : n){

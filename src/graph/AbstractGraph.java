@@ -18,10 +18,6 @@ public abstract class AbstractGraph implements Graph {
 		return true;
 	}
 
-	
-	
-	protected abstract void insert(String s, String s2, double d);
-	protected abstract void changeCapacity(String s, String s2, double d);
 
 	public Map<String,Integer> bfs(String start){
 		if(!(this.allNodes().contains(start))) return null;
@@ -178,7 +174,6 @@ public abstract class AbstractGraph implements Graph {
 		residual.dijkstra(quelle, senke);
 	}
 	
-	protected abstract void deleteZeroEdges();
 
 	public String initialString() {
 		return this.einleseString;

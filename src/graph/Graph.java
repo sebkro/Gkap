@@ -12,6 +12,10 @@ public interface Graph {
 	public String dijkstraFiFo(String start, String end);
 	public Graph[] floydWarshall();
 	
+
+	public abstract void insert(String s, String s2, double d);
+	public abstract void changeCapacity(String s, String s2, double d);
+	public abstract void deleteZeroEdges();
 	
 
 }
