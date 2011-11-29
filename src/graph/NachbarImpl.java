@@ -24,4 +24,8 @@ public class NachbarImpl implements Nachbar {
 	public String toString(){
 		return "Nachbar: "+ this.name() + " " + String.valueOf(this.weight());
 	}
+	
+	public void setWeight(double weight){
+		this.weight = weight;
+	}
 }
