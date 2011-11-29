@@ -5,7 +5,7 @@ import static graph.Graphs.*;
 public class AdjList extends AbstractGraph implements Graph  {
 	private Map<String,List<Nachbar>> internMap = new HashMap<String,List<Nachbar>>();
 	private int zugriffe;
-	private String einleseString;
+	
 	
 	
 	/*Konstruktor
@@ -152,6 +152,18 @@ public class AdjList extends AbstractGraph implements Graph  {
 
 	public Graph[] floydWarshall() {
 		return this.toAdjMatrix().floydWarshall();
+	}
+	
+	public void deleteZeroEdges(){
+		for(List<Nachbar> elem : internMap.values()){
+			zugriffe++;
+			for(Nachbar e : elem){
+				zugriffe++;
+				if(e.weight() == 0){
+					elem.remove(e);
+				}
+			}
+		}
 	}
 
 	

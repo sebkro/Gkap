@@ -7,6 +7,8 @@ import java.util.*;
 
 public abstract class AbstractGraph implements Graph {
 	
+	protected String einleseString;
+	
 	protected static boolean checkElem(String s) {
 		
 		if(getFirst(s).equals("Error")) return false;
@@ -15,6 +17,8 @@ public abstract class AbstractGraph implements Graph {
 		if(Graphs.trenner(s).equals("Error")) return false;
 		return true;
 	}
+
+	
 	
 	protected abstract void insert(String s, String s2, double d);
 	protected abstract void changeCapacity(String s, String s2, double d);
@@ -152,6 +156,7 @@ public abstract class AbstractGraph implements Graph {
 		
 	}
 	
+	//fuer Dijkstra
 	private static String dNextNode(Map<String, Double> m){
 		Double min = Double.POSITIVE_INFINITY;	
 		for(Double elem : m.values()){
@@ -165,6 +170,18 @@ public abstract class AbstractGraph implements Graph {
 			}
 		}
 		return "Error";
+	}
+	
+	public int residualGraph(String quelle, String senke){
+		Graph residual = Graphs.adjList(this.initialString());
+		residual.deleteZeroEdges();
+		residual.dijkstra(quelle, senke);
+	}
+	
+	protected abstract void deleteZeroEdges();
+
+	public String initialString() {
+		return this.einleseString;
 	}
 	
 	
