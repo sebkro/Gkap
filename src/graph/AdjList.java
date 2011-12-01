@@ -165,6 +165,19 @@ public class AdjList extends AbstractGraph implements Graph  {
 			}
 		}
 	}
+	
+	public Double weightBetween(String node1, String node2){
+		if(!((this.allNodes().contains(node1)) && (this.allNodes().contains(node2)))){
+			return Double.NaN;
+		}
+		
+		for(Nachbar elem : internMap.get(node1)){
+			if(elem.name().equals(node2)){
+				return elem.weight();
+			}
+		}
+		return Double.POSITIVE_INFINITY;
+	}
 
 	
 	
