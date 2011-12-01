@@ -40,8 +40,9 @@ public class NAG implements Graph{
 		return 0;
 	}
 
-	public  dijkstra(String start, String end) {
-		return "NAG: Kein Weg!";
+	public Pair<List<String>, Double> dijkstra(String start, String end) {
+		System.out.println("NAG: Kein Weg!");
+		return new Pair<List<String>, Double>();
 	}
 	
 	public String dijkstraFiFo(String strat, String end){

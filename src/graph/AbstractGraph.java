@@ -43,10 +43,10 @@ public abstract class AbstractGraph implements Graph {
 		
 	}
 	
-	public PairImpl<List<String>, Double> dijkstra(String start, String end){
+	public Pair<List<String>, Double> dijkstra(String start, String end){
 		
 		List<String> resultList = new ArrayList<String>();
-		PairImpl<List<String>, Double> result = new PairImpl<List<String>, Double>();
+		Pair<List<String>, Double> result = new Pair<List<String>, Double>();
 		
 		if(!(this.allNodes().contains(start))){
 			System.out.println(start + " nicht im Graphen!");
@@ -117,9 +117,8 @@ public abstract class AbstractGraph implements Graph {
 		result.setFirst(resultList);
 		result.setSecond(marked.get(end));
 		return result;
-		
-		
 	}
+	
 	
 	public String dijkstraFiFo(String start, String end){
 		if(!(this.allNodes().contains(start))) return start + " nicht im Graphen!";
@@ -189,7 +188,12 @@ public abstract class AbstractGraph implements Graph {
 	public int residualGraph(String quelle, String senke){
 		Graph residual = Graphs.adjList(this.initialString());
 		residual.deleteZeroEdges();
-		residual.dijkstra(quelle, senke);
+		Pair<List<String>, Double> dikstra = residual.dijkstra(quelle, senke);
+		while(dikstra.getFirst().isEmpty()){
+			//add ausgabe
+			
+		}
+		
 	}
 	
 

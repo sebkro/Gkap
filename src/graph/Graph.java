@@ -8,9 +8,10 @@ public interface Graph {
 	public Map<String,Integer> bfs(String ecke);
 	public void setZugriffeNull();
 	public int getZugriffe();
-	public Map dijkstra(String start, String end);
+	public Pair<List<String>, Double> dijkstra(String start, String end);
 	public String dijkstraFiFo(String start, String end);
 	public Graph[] floydWarshall();
+	public Double weightBetween(String start, String end);
 	
 
 	public abstract void insert(String s, String s2, double d);

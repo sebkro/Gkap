@@ -156,7 +156,7 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 
 
 	@Override
-	public String dijkstra(String start, String end) {
+	public Pair<List<String>, Double> dijkstra(String start, String end) {
 		return super.dijkstra(start, end);
 	}
 	
@@ -247,8 +247,10 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 		}
 	}
 
-
 	
+	public Double weightBetween(String start, String end){
+		return getMatrixElem(accessMap.get(start), accessMap.get(end));
+	}
 	
 
 
