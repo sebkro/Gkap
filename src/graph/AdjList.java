@@ -141,7 +141,7 @@ public class AdjList extends AbstractGraph implements Graph  {
 	}
 
 	@Override
-	public String dijkstra(String start, String end) {
+	public Pair<List<String>, Double> dijkstra(String start, String end) {
 		return super.dijkstra(start, end);
 	}
 

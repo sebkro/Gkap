@@ -185,15 +185,47 @@ public abstract class AbstractGraph implements Graph {
 		return "Error";
 	}
 	
-	public int residualGraph(String quelle, String senke){
+	public double residualGraph(String quelle, String senke){
 		Graph residual = Graphs.adjList(this.initialString());
 		residual.deleteZeroEdges();
 		Pair<List<String>, Double> dikstra = residual.dijkstra(quelle, senke);
+		double smallestValue = Double.POSITIVE_INFINITY;
 		while(dikstra.getFirst().isEmpty()){
-			//add ausgabe
+			System.out.println("Keine Wege mehr vorhanden!");
+			ListIterator<String> it = dikstra.getFirst().listIterator();
+			ListIterator<String> it2 = dikstra.getFirst().listIterator(1);
 			
+			while(it2.hasNext()){
+				double currentVal = weightBetween(it.next(), it2.next());
+				if(currentVal <= smallestValue){
+					smallestValue = currentVal;
+				}
+			}
+		}
+		ListIterator<String> it = dikstra.getFirst().listIterator();
+		ListIterator<String> it2 = dikstra.getFirst().listIterator(1);
+		
+		while(it2.hasNext()){
+			String from = it.next();
+			String to = it2.next();
+			double newCapacity = weightBetween(from, to) - smallestValue;
+			
+			residual.changeCapacity(from, to, newCapacity);
+			
+			if(weightBetween(to, from) == Double.POSITIVE_INFINITY){
+				residual.insert(to, from, smallestValue);
+			}
+			else{
+				double newVal = weightBetween(to, from) + smallestValue;
+				residual.changeCapacity(to, from, newVal);
+			}
 		}
 		
+		double result = 0;
+		for(Nachbar elem : residual.neighbors(senke)){
+			result += weightBetween(senke, elem.name());
+		}
+		return result;
 	}
 	
 
