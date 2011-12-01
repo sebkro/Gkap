@@ -24,4 +24,15 @@ public class Pair<X, Y> {
 	public void setSecond(Y second){
 		this.second = second;
 	}
+	
+	public String toString(){
+		StringBuffer result = new StringBuffer();
+		result.append("Pair:\n");
+		result.append(first.toString());
+		result.append("<>");
+		result.append(second.toString());
+		result.append("\n");
+		
+		return result.toString();
+	}
 }

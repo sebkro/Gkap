@@ -124,9 +124,9 @@ public class GraphTests {
 //	}
 	
 	public static void dijkstraTest(){
-		String s = "a>e:10;a!c:3;c>e:7;c!d:4;d>e:1;b!e:3;d>b:6";
+		String s = "a>e:10;a>c:3;c>e:7;c>d:4;d>e:1;b>e:3;d>b:6";
 		Graph g = Graphs.adjMatrix(s);
-		System.out.println(g.dijkstra("a", "b"));
+		System.out.println(g.dijkstra("a", "e"));
 		System.out.println("Dijkstra: "+ g.getZugriffe());
 	}
 	
@@ -148,10 +148,19 @@ public class GraphTests {
 		
 	}
 	
+	public static void residualGraphTest(){
+		String s = "q>x1:1;q>x2:1;q>x3:1;q>x4:1;q>x5:1;y1>s:1;y2>s:1;y3>s:1;y4>s:1;y5>s:1;x1>y1:1;x1>y2:1;x1>y3:1;x1>y4:1;x2>y1:1;x2>y2:1;x2>y3:1;x2>y4:1;x3>y2:1;x3>y5:1;x4>y2:1;x4>y5:1;x5>y2:1;x5>y5:1";
+		Graph g = Graphs.adjMatrix(s);
+		Double result = g.residualGraph("q", "s");
+		System.out.println(result);
+	}
+	
 	public static void main(String args[]){
  
 		
-		dijkstraTest();
+		residualGraphTest();
+		
+		//dijkstraTest();
 		
 		//floydWarshallTest();
 		

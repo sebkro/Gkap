@@ -7,7 +7,6 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 	private Map<String, Integer> accessMap = new HashMap<String, Integer>();
 	private double[][] adjMatrix;
 	private int zugriffe;
-	private String einleseString;
 
 	private AdjMatrix(String[] pairs, String einleseString){
 			fillAccessMap(pairs);
@@ -248,7 +247,7 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 	}
 
 	
-	public Double weightBetween(String start, String end){
+	public double weightBetween(String start, String end){
 		return getMatrixElem(accessMap.get(start), accessMap.get(end));
 	}
 	

@@ -170,7 +170,7 @@ public class AdjList extends AbstractGraph implements Graph  {
 		}
 	}
 	
-	public Double weightBetween(String node1, String node2){
+	public double weightBetween(String node1, String node2){
 		if(!((this.allNodes().contains(node1)) && (this.allNodes().contains(node2)))){
 			return Double.NaN;
 		}

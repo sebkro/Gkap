@@ -66,7 +66,11 @@ public class NAG implements Graph{
 		
 	}
 	@Override
-	public Double weightBetween(String start, String end) {
+	public double weightBetween(String start, String end) {
+		return Double.NaN;
+	}
+	@Override
+	public double residualGraph(String quelle, String senke) {
 		return Double.NaN;
 	}
 	

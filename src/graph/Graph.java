@@ -11,7 +11,8 @@ public interface Graph {
 	public Pair<List<String>, Double> dijkstra(String start, String end);
 	public String dijkstraFiFo(String start, String end);
 	public Graph[] floydWarshall();
-	public Double weightBetween(String start, String end);
+	public double weightBetween(String start, String end);
+	public double residualGraph(String quelle, String senke);
 	
 
 	public abstract void insert(String s, String s2, double d);

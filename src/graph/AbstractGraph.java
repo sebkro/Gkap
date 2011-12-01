@@ -47,6 +47,8 @@ public abstract class AbstractGraph implements Graph {
 		
 		List<String> resultList = new ArrayList<String>();
 		Pair<List<String>, Double> result = new Pair<List<String>, Double>();
+		result.setFirst(new ArrayList<String>());
+		result.setSecond(Double.NaN);
 		
 		if(!(this.allNodes().contains(start))){
 			System.out.println(start + " nicht im Graphen!");
@@ -106,7 +108,7 @@ public abstract class AbstractGraph implements Graph {
 		while(!(aktuell.equals(start))){
 			weg.append(", ");
 			weg.append(vorgaenger.get(aktuell));
-			resultList.add(aktuell);
+			resultList.add(vorgaenger.get(aktuell));
 			aktuell = vorgaenger.get(aktuell);
 		}
 		weg.reverse();
@@ -186,44 +188,64 @@ public abstract class AbstractGraph implements Graph {
 	}
 	
 	public double residualGraph(String quelle, String senke){
+		System.out.println(this.initialString());
 		Graph residual = Graphs.adjList(this.initialString());
 		residual.deleteZeroEdges();
 		Pair<List<String>, Double> dikstra = residual.dijkstra(quelle, senke);
-		double smallestValue = Double.POSITIVE_INFINITY;
-		while(dikstra.getFirst().isEmpty()){
+		
+		
+		int test = 0;
+		//!(dikstra.getFirst().isEmpty())
+		while(!(dikstra.getFirst().isEmpty())){
+			
+			double smallestValue = Double.POSITIVE_INFINITY;
+			
+			//System.out.println(dikstra.toString());
 			System.out.println("Keine Wege mehr vorhanden!");
 			ListIterator<String> it = dikstra.getFirst().listIterator();
 			ListIterator<String> it2 = dikstra.getFirst().listIterator(1);
 			
 			while(it2.hasNext()){
-				double currentVal = weightBetween(it.next(), it2.next());
+				double currentVal = residual.weightBetween(it.next(), it2.next());
 				if(currentVal <= smallestValue){
 					smallestValue = currentVal;
 				}
 			}
-		}
-		ListIterator<String> it = dikstra.getFirst().listIterator();
-		ListIterator<String> it2 = dikstra.getFirst().listIterator(1);
+	
 		
-		while(it2.hasNext()){
-			String from = it.next();
-			String to = it2.next();
-			double newCapacity = weightBetween(from, to) - smallestValue;
+			ListIterator<String> ite = dikstra.getFirst().listIterator();
+			ListIterator<String> ite2 = dikstra.getFirst().listIterator(1);
 			
-			residual.changeCapacity(from, to, newCapacity);
-			
-			if(weightBetween(to, from) == Double.POSITIVE_INFINITY){
-				residual.insert(to, from, smallestValue);
+			while(ite2.hasNext()){
+				String from = ite.next();
+				String to = ite2.next();
+				double newCapacity = residual.weightBetween(from, to) - smallestValue;
+				
+				residual.changeCapacity(from, to, newCapacity);
+				
+				System.out.println("SmallestValue: " + smallestValue);
+				
+				if(weightBetween(to, from) == Double.POSITIVE_INFINITY){
+					residual.insert(to, from, smallestValue);
+				}
+				else{
+					double newVal = residual.weightBetween(to, from) + smallestValue;
+					residual.changeCapacity(to, from, newVal);
+				}
 			}
-			else{
-				double newVal = weightBetween(to, from) + smallestValue;
-				residual.changeCapacity(to, from, newVal);
-			}
+			residual.deleteZeroEdges();
+			System.out.println("Residual: \n");
+			System.out.println(residual);
+			dikstra = residual.dijkstra(quelle, senke);
 		}
 		
 		double result = 0;
+		System.out.println(residual);
+		System.out.println(residual.neighbors(senke));
 		for(Nachbar elem : residual.neighbors(senke)){
-			result += weightBetween(senke, elem.name());
+			double val = residual.weightBetween(senke, elem.name());
+			System.out.println(val);
+			result += val;
 		}
 		return result;
 	}
