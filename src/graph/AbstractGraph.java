@@ -114,7 +114,9 @@ public abstract class AbstractGraph implements Graph {
 		weg.append(marked.get(end));
 		System.out.println(weg.toString());
 		resultList = reverse(resultList);
-		return 
+		result.setFirst(resultList);
+		result.setSecond(marked.get(end));
+		return result;
 		
 		
 	}
@@ -195,14 +197,13 @@ public abstract class AbstractGraph implements Graph {
 		return this.einleseString;
 	}
 	
-	public static List<> reverse(List<<E> E> l){
-		List<Object> result = new ArrayList<Object>();
-		ListIterator<?> it = l.listIterator(l.size());
+	public static List<String> reverse(List<String> l){
+		List<String> result = new ArrayList<String>();
+		ListIterator<String> it = l.listIterator(l.size());
 		while(it.hasPrevious()){
 			result.add(it.previous());
 		}
 		return result;
-		
 	}
 	
 	
