@@ -65,5 +65,9 @@ public class NAG implements Graph{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public Double weightBetween(String start, String end) {
+		return Double.NaN;
+	}
 	
 }
