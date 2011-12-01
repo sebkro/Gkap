@@ -43,9 +43,20 @@ public abstract class AbstractGraph implements Graph {
 		
 	}
 	
-	public String dijkstra(String start, String end){
-		if(!(this.allNodes().contains(start))) return start + " nicht im Graphen!";
-		if(!(this.allNodes().contains(end))) return end + " nicht im Graphen!";
+	public PairImpl<List<String>, Double> dijkstra(String start, String end){
+		
+		List<String> resultList = new ArrayList<String>();
+		PairImpl<List<String>, Double> result = new PairImpl<List<String>, Double>();
+		
+		if(!(this.allNodes().contains(start))){
+			System.out.println(start + " nicht im Graphen!");
+			return result;
+		}
+		if(!(this.allNodes().contains(end))){
+			System.out.println(end + " nicht im Graphen!");
+			return result;
+		}
+		
 		
 		Map<String,Double> minEntf = new HashMap<String,Double>();
 		Map<String, String> vorgaenger = new HashMap<String, String>();
@@ -67,7 +78,10 @@ public abstract class AbstractGraph implements Graph {
 		
 		while(!(marked.containsKey(end)) || !(marked.keySet().equals(allNodes()))){
 			String aktuell = dNextNode(minEntf);
-			if(aktuell.equals("Error")) return "kein Weg";
+			if(aktuell.equals("Error")){
+				System.out.println("kein Weg");
+				return result;
+			}
 			
 			for(Nachbar elem : this.neighbors(aktuell)){
 				if(!(marked.containsKey(elem.name()))){
@@ -88,15 +102,19 @@ public abstract class AbstractGraph implements Graph {
 		StringBuffer weg = new StringBuffer();
 		String aktuell = end;
 		weg.append(" " + aktuell);
+		resultList.add(aktuell);
 		while(!(aktuell.equals(start))){
 			weg.append(", ");
 			weg.append(vorgaenger.get(aktuell));
+			resultList.add(aktuell);
 			aktuell = vorgaenger.get(aktuell);
 		}
 		weg.reverse();
 		weg.append("Entfernung: ");
 		weg.append(marked.get(end));
-		return weg.toString();
+		System.out.println(weg.toString());
+		resultList = reverse(resultList);
+		return 
 		
 		
 	}
@@ -139,6 +157,7 @@ public abstract class AbstractGraph implements Graph {
 		String aktuell = end;
 		weg.append(" " + aktuell);
 		while(!(aktuell.equals(start))){
+			
 			weg.append(", ");
 			weg.append(vorgaenger.get(aktuell));
 			aktuell = vorgaenger.get(aktuell);
@@ -147,9 +166,6 @@ public abstract class AbstractGraph implements Graph {
 		weg.append("Entfernung: ");
 		weg.append(minEntf.get(end));
 		return weg.toString();
-			
-			
-		
 	}
 	
 	//fuer Dijkstra
@@ -177,6 +193,16 @@ public abstract class AbstractGraph implements Graph {
 
 	public String initialString() {
 		return this.einleseString;
+	}
+	
+	public static List<> reverse(List<<E> E> l){
+		List<Object> result = new ArrayList<Object>();
+		ListIterator<?> it = l.listIterator(l.size());
+		while(it.hasPrevious()){
+			result.add(it.previous());
+		}
+		return result;
+		
 	}
 	
 	

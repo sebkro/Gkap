@@ -8,7 +8,7 @@ public interface Graph {
 	public Map<String,Integer> bfs(String ecke);
 	public void setZugriffeNull();
 	public int getZugriffe();
-	public String dijkstra(String start, String end);
+	public Map dijkstra(String start, String end);
 	public String dijkstraFiFo(String start, String end);
 	public Graph[] floydWarshall();
 	

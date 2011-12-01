@@ -151,9 +151,9 @@ public class GraphTests {
 	public static void main(String args[]){
  
 		
-		//dijkstraTest();
+		dijkstraTest();
 		
-		floydWarshallTest();
+		//floydWarshallTest();
 		
 		//fiFoTest();
 		

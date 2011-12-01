@@ -40,7 +40,7 @@ public class NAG implements Graph{
 		return 0;
 	}
 
-	public String dijkstra(String start, String end) {
+	public  dijkstra(String start, String end) {
 		return "NAG: Kein Weg!";
 	}
 	
