@@ -67,22 +67,23 @@ public class AdjList extends AbstractGraph implements Graph  {
 	}
 	
 	public void changeCapacity(String from, String to, double capacity){
+		boolean changed = false;
 		if(internMap.containsKey(from)){
-			if(internMap.get(from).contains(to)){
-				List<Nachbar> n = internMap.get(from);
-				for(Nachbar elem : n){
+				for(Nachbar elem : internMap.get(from)){
 					zugriffe++;
 					if(elem.name().equals(to)){
 						elem.setWeight(capacity);
+						changed = true;
 						break; // zur optimierung
-					}
-					
+					}		
 				}
-			}else{
-				internMap.get(from).add(Graphs.nachbar(to, capacity));
+			if(!changed){
+				internMap.get(from).add(Graphs.nachbar(to,capacity));
 			}
-				
 		}
+		
+				
+		
 		
 	}
 	
@@ -159,14 +160,14 @@ public class AdjList extends AbstractGraph implements Graph  {
 	}
 	
 	public void deleteZeroEdges(){
-		for(List<Nachbar> elem : internMap.values()){
-			zugriffe++;
-			for(Nachbar e : elem){
-				zugriffe++;
-				if(e.weight() == 0.0){
-					elem.remove(e);
+		for(Map.Entry<String, List<Nachbar>> entry : internMap.entrySet()){
+			List<Nachbar> result = new ArrayList<Nachbar>();
+			for(Nachbar n : entry.getValue()){
+				if(n.weight() != 0.0){
+					result.add(n);
 				}
 			}
+			internMap.put(entry.getKey(), result);
 		}
 	}
 	

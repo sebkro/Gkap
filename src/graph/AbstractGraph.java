@@ -81,7 +81,6 @@ public abstract class AbstractGraph implements Graph {
 		while(!(marked.containsKey(end)) || !(marked.keySet().equals(allNodes()))){
 			String aktuell = dNextNode(minEntf);
 			if(aktuell.equals("Error")){
-				System.out.println("kein Weg");
 				return result;
 			}
 			
@@ -100,21 +99,12 @@ public abstract class AbstractGraph implements Graph {
 		/*
 		 * Berechnung fertig, es folgt die Generierung des AusgabeStrings
 		 */
-		
-		StringBuffer weg = new StringBuffer();
 		String aktuell = end;
-		weg.append(" " + aktuell);
 		resultList.add(aktuell);
 		while(!(aktuell.equals(start))){
-			weg.append(", ");
-			weg.append(vorgaenger.get(aktuell));
 			resultList.add(vorgaenger.get(aktuell));
 			aktuell = vorgaenger.get(aktuell);
 		}
-		weg.reverse();
-		weg.append("Entfernung: ");
-		weg.append(marked.get(end));
-		System.out.println(weg.toString());
 		resultList = reverse(resultList);
 		result.setFirst(resultList);
 		result.setSecond(marked.get(end));
@@ -187,21 +177,15 @@ public abstract class AbstractGraph implements Graph {
 		return "Error";
 	}
 	
-	public double residualGraph(String quelle, String senke){
-		System.out.println(this.initialString());
-		Graph residual = Graphs.adjList(this.initialString());
+	public Pair<Graph, Double> residualGraph(String quelle, String senke){
+		Graph residual = Graphs.adjMatrix(this.initialString());
 		residual.deleteZeroEdges();
 		Pair<List<String>, Double> dikstra = residual.dijkstra(quelle, senke);
 		
-		
-		int test = 0;
-		//!(dikstra.getFirst().isEmpty())
 		while(!(dikstra.getFirst().isEmpty())){
 			
 			double smallestValue = Double.POSITIVE_INFINITY;
 			
-			//System.out.println(dikstra.toString());
-			System.out.println("Keine Wege mehr vorhanden!");
 			ListIterator<String> it = dikstra.getFirst().listIterator();
 			ListIterator<String> it2 = dikstra.getFirst().listIterator(1);
 			
@@ -223,8 +207,6 @@ public abstract class AbstractGraph implements Graph {
 				
 				residual.changeCapacity(from, to, newCapacity);
 				
-				System.out.println("SmallestValue: " + smallestValue);
-				
 				if(weightBetween(to, from) == Double.POSITIVE_INFINITY){
 					residual.insert(to, from, smallestValue);
 				}
@@ -234,20 +216,18 @@ public abstract class AbstractGraph implements Graph {
 				}
 			}
 			residual.deleteZeroEdges();
-			System.out.println("Residual: \n");
-			System.out.println(residual);
 			dikstra = residual.dijkstra(quelle, senke);
 		}
 		
 		double result = 0;
-		System.out.println(residual);
-		System.out.println(residual.neighbors(senke));
 		for(Nachbar elem : residual.neighbors(senke)){
 			double val = residual.weightBetween(senke, elem.name());
-			System.out.println(val);
 			result += val;
 		}
-		return result;
+		Pair<Graph,Double> p = new Pair<Graph,Double>();
+		p.setFirst(residual);
+		p.setSecond(result);
+		return p;
 	}
 	
 

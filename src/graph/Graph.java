@@ -12,7 +12,7 @@ public interface Graph {
 	public String dijkstraFiFo(String start, String end);
 	public Graph[] floydWarshall();
 	public double weightBetween(String start, String end);
-	public double residualGraph(String quelle, String senke);
+	public Pair<Graph, Double> residualGraph(String quelle, String senke);
 	
 
 	public abstract void insert(String s, String s2, double d);

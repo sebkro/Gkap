@@ -70,8 +70,11 @@ public class NAG implements Graph{
 		return Double.NaN;
 	}
 	@Override
-	public double residualGraph(String quelle, String senke) {
-		return Double.NaN;
+	public Pair<Graph, Double> residualGraph(String quelle, String senke) {
+		Pair<Graph, Double> result = new Pair<Graph, Double>();
+		result.setFirst(Graphs.nag);
+		result.setSecond(Double.NaN);
+		return result;
 	}
 	
 }
