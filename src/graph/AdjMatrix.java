@@ -250,6 +250,40 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 	public double weightBetween(String start, String end){
 		return getMatrixElem(accessMap.get(start), accessMap.get(end));
 	}
+
+
+	@Override
+	public List<Pair<String, Double>> edgesReverse(String eckenname) throws IllegalArgumentException{
+		if(!this.allNodes().contains(eckenname)) throw new IllegalArgumentException();
+		
+		List<Pair<String,Double>> result = new ArrayList<Pair<String,Double>>();
+		
+		int internRep = this.accessMap.get(eckenname);
+		for(int i = 0; i < this.accessMap.size(); i++){
+			if(i != internRep){
+				if(!Double.isInfinite(adjMatrix[i][internRep] )){
+					Pair<String,Double> p = new Pair<String,Double>();
+					p.setFirst(keyOf(accessMap, i));
+					p.setSecond(adjMatrix[i][internRep] * (-1.0));
+					result.add(p);
+				}
+			}
+		}
+		
+		return result;
+		
+		
+	}
+	
+	//Hilfsmethode, um Zahlenrepraesentanten der Knoten wieder die jeweiligen Namen zuzuordnen
+	private String keyOf(Map<String,Integer> m ,Integer value){
+		for(Map.Entry<String, Integer> entry : m.entrySet() ){
+			if(entry.getValue().equals(value)){
+				return entry.getKey();
+			}
+		}
+		return "";
+	}
 	
 
 

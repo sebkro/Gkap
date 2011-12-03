@@ -152,16 +152,41 @@ public class GraphTests {
 		System.out.println(result.toString());
 	}
 	
+	public static void edgesReverseTest(){
+		String s = "a>b:1;a>c:4;b>c:3;b>d:1;c>d:5";
+		Graph g = Graphs.adjList(s);
+		
+		System.out.println("AdjList: ");
+		System.out.println("A " + g.edgesReverse("a"));
+		System.out.println("B " + g.edgesReverse("b"));
+		System.out.println("C " + g.edgesReverse("c"));
+		System.out.println("D " + g.edgesReverse("d"));
+		//System.out.println("X " + g.edgesReverse("x"));
+		
+		g = Graphs.adjMatrix(s);
+		
+		System.out.println("AdjMatrix:");
+		System.out.println("A " + g.edgesReverse("a"));
+		System.out.println("B " + g.edgesReverse("b"));
+		System.out.println("C " + g.edgesReverse("c"));
+		System.out.println("D " + g.edgesReverse("d"));
+		//System.out.println("X " + g.edgesReverse("x"));
+		
+		
+	}
+	
 	public static void main(String args[]){
  
 		
-		residualGraphTest();
+		//residualGraphTest();
 		
 		//dijkstraTest();
 		
 		//floydWarshallTest();
 		
 		//fiFoTest();
+		
+		edgesReverseTest();
 		
 		
 		
