@@ -1,5 +1,6 @@
 package graph;
 import java.util.*;
+
 import static graph.Graphs.*;
 
 public class AdjList extends AbstractGraph implements Graph  {
@@ -182,6 +183,25 @@ public class AdjList extends AbstractGraph implements Graph  {
 			}
 		}
 		return Double.POSITIVE_INFINITY;
+	}
+
+	@Override
+	public List<Pair<String,Double>> edgesReverse(String eckenname) throws IllegalArgumentException {
+		if(!allNodes().contains(eckenname)) throw new IllegalArgumentException();
+		
+		List<Pair<String,Double>> result = new ArrayList<Pair<String,Double>>();
+		
+		for(Map.Entry<String, List<Nachbar>> entry : internMap.entrySet()){
+			for(Nachbar elem : entry.getValue()){
+				if(elem.name().equals(eckenname)){
+					Pair<String,Double> p = new Pair<String,Double>();
+					p.setFirst(entry.getKey());
+					p.setSecond(elem.weight() * (-1.0));
+					result.add(p);
+				}
+			}
+		}
+		return result;
 	}
 
 	

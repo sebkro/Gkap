@@ -13,7 +13,7 @@ public interface Graph {
 	public Graph[] floydWarshall();
 	public double weightBetween(String start, String end);
 	public Pair<Graph, Double> residualGraph(String quelle, String senke);
-	
+	public List<Pair<String,Double>> edgesReverse(String eckenname);
 
 	public abstract void insert(String s, String s2, double d);
 	public abstract void changeCapacity(String s, String s2, double d);
