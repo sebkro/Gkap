@@ -234,16 +234,21 @@ public abstract class AbstractGraph implements Graph {
 		if(!(allNodes().contains(quelle))) throw new IllegalArgumentException();
 		if(!(allNodes().contains(senke))) throw new IllegalArgumentException();
 		
-		Map<String,Pair<String,Double>> marked = new HashMap<String,Pair<String,Double>>();
 		Map<String,Pair<String,Double>> completed = new HashMap<String,Pair<String,Double>>();
 		Queue<String> queue = new LinkedList<String>();
+		
+		//FlussGraph als Kopie der OriginalGraphen
+		Graph flussGraph = Graphs.adjList(initialString());
+		
+		//Gewichtung bei allen Kanten von FlussGraph mit 0 init
+		
+		
 		boolean finished = false;
 		
 		while(!finished){
 			
-			
 			//init wird bei jedem Teilschritt wiederholt
-			marked.put(quelle, Graphs.createPair("undef", Double.POSITIVE_INFINITY) );
+			completed.put(quelle, Graphs.createPair("undef", Double.POSITIVE_INFINITY) );
 			queue.add(quelle);
 			
 			//eigentliche berechnung
@@ -252,12 +257,48 @@ public abstract class AbstractGraph implements Graph {
 				List<Nachbar> positiveNeighbors = this.neighbors(aktuell);
 				List<Pair<String,Double>> negativeNeighbors = this.edgesReverse(aktuell);
 				
+				//entferne bei positiveNeighbors alle markierten oder vollstaendig untersuchten ecken
+				List<Nachbar> result = new ArrayList<Nachbar>();
+				for(Nachbar elem : positiveNeighbors){
+					if(!((completed.entrySet().contains(elem)) && (queue.contains(elem.name())))) result.add(elem);
+				}
+				positiveNeighbors = result;
+				
+				//entferne bei negativeNeighbors alle markierten oder vollstaendig untersuchten ecken
+				List<Pair<String,Double>> r = new ArrayList<Pair<String,Double>>(); 
+				for(Pair<String,Double> elem : negativeNeighbors){
+					if(!((completed.entrySet().contains(elem.getFirst())) && (queue.contains(elem.getFirst())))) r.add(elem);
+				}
+				negativeNeighbors = r;
+				
+				for(Nachbar elem : positiveNeighbors){
+					//berechnung des Flusses
+					double flussVorgaenger = completed.get(aktuell).getSecond();
+					double flussAktuell = this.weightBetween(aktuell, elem.name());
+					flussAktuell = Math.min(flussVorgaenger, flussAktuell);
+					
+					//elem in completed eintragen (mit Vorgaenger und Fluss)
+					completed.put(elem.name(), Graphs.createPair(aktuell, flussAktuell));
+					
+					//Abbruch der Schleife, wenn senke gefunden
+					if(elem.name().equals(senke)) queue.clear();	
+						 
+				}
+				
+				for(Pair<String,Double> elem : negativeNeighbors){
+					
+				}
+				
+				
+				
+				
 			}
 			
 		}
 		
 	}
 	
+		
 
 	public String initialString() {
 		return this.einleseString;

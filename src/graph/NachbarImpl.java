@@ -28,4 +28,10 @@ public class NachbarImpl implements Nachbar {
 	public void setWeight(double weight){
 		this.weight = weight;
 	}
+	
+	public boolean equals(Object o){
+		if(!(o instanceof Nachbar)) return false;
+		Nachbar n = (Nachbar) o;
+		return name.equals(n.name()) && weight == (n.weight());
+	}
 }
