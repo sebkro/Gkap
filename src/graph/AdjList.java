@@ -196,7 +196,7 @@ public class AdjList extends AbstractGraph implements Graph  {
 				if(elem.name().equals(eckenname)){
 					Pair<String,Double> p = new Pair<String,Double>();
 					p.setFirst(entry.getKey());
-					p.setSecond(elem.weight() * (-1.0));
+					p.setSecond(elem.weight());
 					result.add(p);
 				}
 			}

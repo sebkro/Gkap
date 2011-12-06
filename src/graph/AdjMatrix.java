@@ -264,7 +264,7 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 				if(!Double.isInfinite(adjMatrix[i][internRep] )){
 					Pair<String,Double> p = new Pair<String,Double>();
 					p.setFirst(keyOf(accessMap, i));
-					p.setSecond(adjMatrix[i][internRep] * (-1.0));
+					p.setSecond(adjMatrix[i][internRep]);
 					result.add(p);
 				}
 			}

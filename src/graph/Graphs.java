@@ -24,6 +24,13 @@ public class Graphs {
 		return NachbarImpl.valueOf(s, weight);
 	}
 	
+	
+	public static <X,Y> Pair<X,Y> createPair(X x, Y y){
+		Pair<X,Y> p = new Pair<X,Y>();
+		p.setFirst(x);
+		p.setSecond(y);
+		return p;
+	}
 	public static Graph adjMatrix(String s){
 		return AdjMatrix.valueOf(s);
 	}

@@ -230,6 +230,34 @@ public abstract class AbstractGraph implements Graph {
 		return p;
 	}
 	
+	public Pair<Graph, Double> fordFulkerson(String quelle, String senke){
+		if(!(allNodes().contains(quelle))) throw new IllegalArgumentException();
+		if(!(allNodes().contains(senke))) throw new IllegalArgumentException();
+		
+		Map<String,Pair<String,Double>> marked = new HashMap<String,Pair<String,Double>>();
+		Map<String,Pair<String,Double>> completed = new HashMap<String,Pair<String,Double>>();
+		Queue<String> queue = new LinkedList<String>();
+		boolean finished = false;
+		
+		while(!finished){
+			
+			
+			//init wird bei jedem Teilschritt wiederholt
+			marked.put(quelle, Graphs.createPair("undef", Double.POSITIVE_INFINITY) );
+			queue.add(quelle);
+			
+			//eigentliche berechnung
+			while(!queue.isEmpty()){
+				String aktuell = queue.poll();
+				List<Nachbar> positiveNeighbors = this.neighbors(aktuell);
+				List<Pair<String,Double>> negativeNeighbors = this.edgesReverse(aktuell);
+				
+			}
+			
+		}
+		
+	}
+	
 
 	public String initialString() {
 		return this.einleseString;
