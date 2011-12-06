@@ -230,7 +230,7 @@ public abstract class AbstractGraph implements Graph {
 		return p;
 	}
 	
-	public Pair<Graph, Double> fordFulkerson(String quelle, String senke){
+	public Graph fordFulkerson(String quelle, String senke){
 		if(!(allNodes().contains(quelle))) throw new IllegalArgumentException();
 		if(!(allNodes().contains(senke))) throw new IllegalArgumentException();
 		
@@ -246,6 +246,7 @@ public abstract class AbstractGraph implements Graph {
 		boolean finished = false;
 		
 		while(!finished){
+			finished = true;
 			
 			//init wird bei jedem Teilschritt wiederholt
 			completed.put(quelle, Graphs.createPair("undef", Double.POSITIVE_INFINITY) );
@@ -264,6 +265,9 @@ public abstract class AbstractGraph implements Graph {
 				}
 				positiveNeighbors = result;
 				
+				
+				if(!(positiveNeighbors.isEmpty())) finished = false;
+				
 				//entferne bei negativeNeighbors alle markierten oder vollstaendig untersuchten ecken
 				List<Pair<String,Double>> r = new ArrayList<Pair<String,Double>>(); 
 				for(Pair<String,Double> elem : negativeNeighbors){
@@ -271,22 +275,34 @@ public abstract class AbstractGraph implements Graph {
 				}
 				negativeNeighbors = r;
 				
+				if(!(negativeNeighbors.isEmpty())) finished = false;
+				
+				double flussVorgaenger = Math.abs(completed.get(aktuell).getSecond());
+				
 				for(Nachbar elem : positiveNeighbors){
 					//berechnung des Flusses
-					double flussVorgaenger = completed.get(aktuell).getSecond();
-					double flussAktuell = this.weightBetween(aktuell, elem.name());
-					flussAktuell = Math.min(flussVorgaenger, flussAktuell);
 					
-					//elem in completed eintragen (mit Vorgaenger und Fluss)
-					completed.put(elem.name(), Graphs.createPair(aktuell, flussAktuell));
+					double flussAktuell = this.weightBetween(aktuell, elem.name()) - flussGraph.weightBetween(aktuell, elem.name());
 					
-					//Abbruch der Schleife, wenn senke gefunden
-					if(elem.name().equals(senke)) queue.clear();	
+					if(flussAktuell > 0){
+						flussAktuell = Math.min(flussVorgaenger, flussAktuell);
+						
+						//elem in completed eintragen (mit Vorgaenger und Fluss)
+					
+						completed.put(elem.name(), Graphs.createPair(aktuell, flussAktuell));
+						queue.add(elem.name());
+						
+						//Abbruch der Schleife in naechsten Durchlauf, wenn senke gefunden
+						if(elem.name().equals(senke)) queue.clear();
+					}
 						 
 				}
 				
 				for(Pair<String,Double> elem : negativeNeighbors){
-					
+					double flussAktuell = flussGraph.weightBetween(elem.getFirst(), aktuell);
+					flussAktuell = Math.min(flussAktuell, flussVorgaenger); 
+					completed.put(elem.getFirst(), Graphs.createPair(aktuell, flussAktuell * (-1.0) ));
+					queue.add(elem.getFirst());
 				}
 				
 				
@@ -294,7 +310,32 @@ public abstract class AbstractGraph implements Graph {
 				
 			}
 			
+			// aktualisieren des FlussGraphen
+			
+			System.out.println(completed);
+			
+			double value = completed.get(senke).getSecond(); //zu erhoehender Wert
+			
+			String ecke = senke;
+			
+			while(!(ecke.equals(quelle))){
+				String vorgaenger = completed.get(ecke).getFirst();
+				if(completed.get(ecke).getSecond() > 0){
+					flussGraph.changeCapacity(vorgaenger, ecke, flussGraph.weightBetween(vorgaenger, ecke) + value);
+				}else{
+					flussGraph.changeCapacity(vorgaenger, ecke, flussGraph.weightBetween(vorgaenger, ecke) - value);
+				}
+				
+				ecke = vorgaenger;
+			}
+			
+			//markierungen zuruecksetzen
+			
+			completed.clear();
+			
 		}
+		
+		return flussGraph;
 		
 	}
 	
