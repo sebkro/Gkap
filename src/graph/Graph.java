@@ -18,6 +18,7 @@ public interface Graph {
 	public abstract void insert(String s, String s2, double d);
 	public abstract void changeCapacity(String s, String s2, double d);
 	public abstract void deleteZeroEdges();
+	public abstract void allEdgesZero();
 	
 
 }

@@ -65,16 +65,23 @@ public class NAG implements Graph{
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
+	
 	public double weightBetween(String start, String end) {
 		return Double.NaN;
 	}
-	@Override
+	
 	public Pair<Graph, Double> residualGraph(String quelle, String senke) {
 		Pair<Graph, Double> result = new Pair<Graph, Double>();
 		result.setFirst(Graphs.nag);
 		result.setSecond(Double.NaN);
 		return result;
+	}
+	public List<Pair<String, Double>> edgesReverse(String eckenname)
+			throws IllegalArgumentException {
+		return null;
+	}
+	public void allEdgesZero() {
+		
 	}
 	
 }

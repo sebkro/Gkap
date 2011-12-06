@@ -185,7 +185,6 @@ public class AdjList extends AbstractGraph implements Graph  {
 		return Double.POSITIVE_INFINITY;
 	}
 
-	@Override
 	public List<Pair<String,Double>> edgesReverse(String eckenname) throws IllegalArgumentException {
 		if(!allNodes().contains(eckenname)) throw new IllegalArgumentException();
 		
@@ -202,6 +201,14 @@ public class AdjList extends AbstractGraph implements Graph  {
 			}
 		}
 		return result;
+	}
+
+	public void allEdgesZero() {
+		for(Map.Entry<String, List<Nachbar>> map : internMap.entrySet()){
+			for(Nachbar n : map.getValue()){
+				n.setWeight(0);
+			}
+		}
 	}
 
 	

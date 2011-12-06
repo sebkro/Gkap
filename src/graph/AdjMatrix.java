@@ -21,7 +21,7 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 	 */
 	private void createMatrix(int size, String[] pairs) {
 		adjMatrix = new double[size][size];
-		preFillMatrix(size);
+		preFillMatrix(size, Double.POSITIVE_INFINITY);
 		
 		for(String elem : pairs){
 			int firstNode =  accessMap.get(getFirst(elem));
@@ -43,10 +43,10 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 	 * 1 als Default-Wert ist nicht moeglich, da die Funktion "createMatrix" sonst nicht wuesste,
 	 * ob ein Feld mit 1 eine Kante mit der Gewichtung 1 ist oder der Default-Wert
 	 */
-	private void preFillMatrix(int size) {
+	private void preFillMatrix(int size, double val) {
 		for(int i = 0; i < size; i++){
 			for(int j = 0; j < size; j++){
-				adjMatrix[i][j] = Double.POSITIVE_INFINITY;
+				adjMatrix[i][j] = val;
 			}
 		}
 	}
@@ -252,7 +252,7 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 	}
 
 
-	@Override
+	
 	public List<Pair<String, Double>> edgesReverse(String eckenname) throws IllegalArgumentException{
 		if(!this.allNodes().contains(eckenname)) throw new IllegalArgumentException();
 		
@@ -283,6 +283,11 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 			}
 		}
 		return "";
+	}
+
+
+	public void allEdgesZero() {
+		this.preFillMatrix(adjMatrix.length, 0.0);
 	}
 	
 
