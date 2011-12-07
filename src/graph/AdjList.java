@@ -204,9 +204,9 @@ public class AdjList extends AbstractGraph implements Graph  {
 	}
 
 	public void allEdgesZero() {
-		for(Map.Entry<String, List<Nachbar>> map : internMap.entrySet()){
-			for(Nachbar n : map.getValue()){
-				n.setWeight(0);
+		for(List<Nachbar> elem : internMap.values()){
+			for(Nachbar e : elem){
+				e.setWeight(0.0);
 			}
 		}
 	}

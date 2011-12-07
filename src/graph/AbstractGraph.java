@@ -239,6 +239,7 @@ public abstract class AbstractGraph implements Graph {
 		
 		//FlussGraph als Kopie der OriginalGraphen
 		Graph flussGraph = Graphs.adjList(initialString());
+		flussGraph.allEdgesZero();
 		
 		//Gewichtung bei allen Kanten von FlussGraph mit 0 init
 		
@@ -246,36 +247,47 @@ public abstract class AbstractGraph implements Graph {
 		boolean finished = false;
 		
 		while(!finished){
-			finished = true;
+			
+			
 			
 			//init wird bei jedem Teilschritt wiederholt
 			completed.put(quelle, Graphs.createPair("undef", Double.POSITIVE_INFINITY) );
 			queue.add(quelle);
 			
 			//eigentliche berechnung
-			while(!queue.isEmpty()){
+			
+			
+			while(!(queue.isEmpty())){
+				
 				String aktuell = queue.poll();
-				List<Nachbar> positiveNeighbors = this.neighbors(aktuell);
-				List<Pair<String,Double>> negativeNeighbors = this.edgesReverse(aktuell);
+				List<Nachbar> positiveNeighbors = new ArrayList<Nachbar>();
+				List<Pair<String,Double>> negativeNeighbors = new ArrayList<Pair<String,Double>>();
 				
 				//entferne bei positiveNeighbors alle markierten oder vollstaendig untersuchten ecken
-				List<Nachbar> result = new ArrayList<Nachbar>();
-				for(Nachbar elem : positiveNeighbors){
-					if(!((completed.entrySet().contains(elem)) && (queue.contains(elem.name())))) result.add(elem);
+				for(Nachbar elem : this.neighbors(aktuell)){
+					if(weightBetween(aktuell,elem.name()) - flussGraph.weightBetween(aktuell, elem.name()) > 0 ){
+						if(!(completed.keySet().contains(elem.name()))){
+							positiveNeighbors.add(elem);
+						}
+					}
 				}
-				positiveNeighbors = result;
 				
-				
-				if(!(positiveNeighbors.isEmpty())) finished = false;
-				
+										
 				//entferne bei negativeNeighbors alle markierten oder vollstaendig untersuchten ecken
-				List<Pair<String,Double>> r = new ArrayList<Pair<String,Double>>(); 
-				for(Pair<String,Double> elem : negativeNeighbors){
-					if(!((completed.entrySet().contains(elem.getFirst())) && (queue.contains(elem.getFirst())))) r.add(elem);
-				}
-				negativeNeighbors = r;
 				
-				if(!(negativeNeighbors.isEmpty())) finished = false;
+				for(Pair<String,Double> elem : edgesReverse(aktuell) ){
+					if(flussGraph.weightBetween(elem.getFirst(), aktuell) > 0){
+						if(!(completed.containsKey(elem.getFirst()))){
+							negativeNeighbors.add(elem);
+						}
+					}
+				}
+				
+				
+				if(negativeNeighbors.isEmpty() && positiveNeighbors.isEmpty() && queue.isEmpty()){
+					finished = true;
+					queue.clear();
+				}
 				
 				double flussVorgaenger = Math.abs(completed.get(aktuell).getSecond());
 				
@@ -312,23 +324,24 @@ public abstract class AbstractGraph implements Graph {
 			
 			// aktualisieren des FlussGraphen
 			
-			System.out.println(completed);
 			
-			double value = completed.get(senke).getSecond(); //zu erhoehender Wert
-			
-			String ecke = senke;
-			
-			while(!(ecke.equals(quelle))){
-				String vorgaenger = completed.get(ecke).getFirst();
-				if(completed.get(ecke).getSecond() > 0){
-					flussGraph.changeCapacity(vorgaenger, ecke, flussGraph.weightBetween(vorgaenger, ecke) + value);
-				}else{
-					flussGraph.changeCapacity(vorgaenger, ecke, flussGraph.weightBetween(vorgaenger, ecke) - value);
-				}
+			if(!finished){
+				double value = completed.get(senke).getSecond(); //zu erhoehender Wert
 				
-				ecke = vorgaenger;
+				String ecke = senke;
+				
+				while(!(ecke.equals(quelle))){
+					String vorgaenger = completed.get(ecke).getFirst();
+					if(completed.get(ecke).getSecond() > 0){
+						flussGraph.changeCapacity(vorgaenger, ecke, flussGraph.weightBetween(vorgaenger, ecke) + value);
+					}else{
+						flussGraph.changeCapacity(ecke, vorgaenger, flussGraph.weightBetween(ecke, vorgaenger) - value);
+					}
+					
+					ecke = vorgaenger;
+				}
 			}
-			
+				
 			//markierungen zuruecksetzen
 			
 			completed.clear();
