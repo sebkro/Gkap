@@ -19,7 +19,7 @@ public interface Graph {
 	public abstract void changeCapacity(String s, String s2, double d);
 	public abstract void deleteZeroEdges();
 	public abstract void allEdgesZero();
-	public Graph fordFulkerson(String quelle, String senke);
+	public Pair<Graph,Double> fordFulkerson(String quelle, String senke);
 	
 
 }
