@@ -83,5 +83,9 @@ public class NAG implements Graph{
 	public void allEdgesZero() {
 		
 	}
+	@Override
+	public Graph fordFulkerson(String quelle, String senke) {
+		return Graphs.nag;
+	}
 	
 }
