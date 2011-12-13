@@ -79,6 +79,7 @@ public class AdjList extends AbstractGraph implements Graph  {
 					}		
 				}
 			if(!changed){
+				zugriffe++;
 				internMap.get(from).add(Graphs.nachbar(to,capacity));
 			}
 		}
@@ -164,6 +165,7 @@ public class AdjList extends AbstractGraph implements Graph  {
 		for(Map.Entry<String, List<Nachbar>> entry : internMap.entrySet()){
 			List<Nachbar> result = new ArrayList<Nachbar>();
 			for(Nachbar n : entry.getValue()){
+				zugriffe++;
 				if(n.weight() != 0.0){
 					result.add(n);
 				}
@@ -178,6 +180,7 @@ public class AdjList extends AbstractGraph implements Graph  {
 		}
 		
 		for(Nachbar elem : internMap.get(node1)){
+			zugriffe++;
 			if(elem.name().equals(node2)){
 				return elem.weight();
 			}
@@ -192,6 +195,7 @@ public class AdjList extends AbstractGraph implements Graph  {
 		
 		for(Map.Entry<String, List<Nachbar>> entry : internMap.entrySet()){
 			for(Nachbar elem : entry.getValue()){
+				zugriffe++;
 				if(elem.name().equals(eckenname)){
 					Pair<String,Double> p = new Pair<String,Double>();
 					p.setFirst(entry.getKey());
@@ -206,9 +210,15 @@ public class AdjList extends AbstractGraph implements Graph  {
 	public void allEdgesZero() {
 		for(List<Nachbar> elem : internMap.values()){
 			for(Nachbar e : elem){
+				zugriffe++;
 				e.setWeight(0.0);
 			}
 		}
+	}
+
+	@Override
+	public void setZugriffe(int i) {
+		this.zugriffe = i;
 	}
 
 	

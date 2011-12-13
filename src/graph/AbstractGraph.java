@@ -230,7 +230,7 @@ public abstract class AbstractGraph implements Graph {
 		return p;
 	}
 	
-	public Graph fordFulkerson(String quelle, String senke){
+	public Pair<Graph,Double> fordFulkerson(String quelle, String senke){
 		if(!(allNodes().contains(quelle))) throw new IllegalArgumentException();
 		if(!(allNodes().contains(senke))) throw new IllegalArgumentException();
 		
@@ -348,7 +348,16 @@ public abstract class AbstractGraph implements Graph {
 			
 		}
 		
-		return flussGraph;
+		// fluesse fertig berechnet ==> bewertungen der von s ausgehenden kanten zusammenrechnen
+		
+		double fluss = 0;
+		
+		for(Nachbar elem : flussGraph.neighbors(quelle)){
+			fluss += elem.weight();
+		}
+		
+		this.setZugriffe(flussGraph.getZugriffe() + this.getZugriffe());
+		return Graphs.createPair(flussGraph, fluss);
 		
 	}
 	

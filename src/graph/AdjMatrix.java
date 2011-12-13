@@ -289,6 +289,13 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 	public void allEdgesZero() {
 		this.preFillMatrix(adjMatrix.length, 0.0);
 	}
+
+
+	@Override
+	public void setZugriffe(int i) {
+		this.zugriffe = i;
+		
+	}
 	
 
 

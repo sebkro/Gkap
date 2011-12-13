@@ -20,6 +20,7 @@ public interface Graph {
 	public abstract void deleteZeroEdges();
 	public abstract void allEdgesZero();
 	public Pair<Graph,Double> fordFulkerson(String quelle, String senke);
+	public void setZugriffe(int i);
 	
 
 }

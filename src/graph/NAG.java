@@ -84,8 +84,13 @@ public class NAG implements Graph{
 		
 	}
 	@Override
-	public Graph fordFulkerson(String quelle, String senke) {
-		return Graphs.nag;
+	public Pair<Graph,Double> fordFulkerson(String quelle, String senke) {
+		return Graphs.createPair(Graphs.nag,-1.0);
+	}
+	@Override
+	public void setZugriffe(int i) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

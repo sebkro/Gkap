@@ -176,10 +176,11 @@ public class GraphTests {
 	}
 	
 	public static void fordFulkersonTest(){
-		//String s = "q>x1:1;q>x2:1;q>x3:1;q>x4:1;x1>y1:1;x1>y2:1;x1>y4:1;x2>y1:1;x3>y3:1;x4>y4:1;y1>s:1;y2>s:1;y3>s:1;y4>s:1";
-		String s = "q>v1:4;q>v2:2;v1>v3:2;v1>v4:3;v2>v4:3;v3>s:5;v4>s:1";
+		String s = "q>x1:1;q>x2:1;q>x3:1;q>x4:1;x1>y1:1;x1>y2:1;x1>y4:1;x2>y1:1;x3>y3:1;x4>y4:1;y1>s:1;y2>s:1;y3>s:1;y4>s:1";
+		//String s = "q>v1:4;q>v2:2;v1>v3:2;v1>v4:3;v2>v4:3;v3>s:5;v4>s:1";
 		Graph g = Graphs.adjList(s);
 		System.out.println(g.fordFulkerson("q", "s"));
+		System.out.println("Zugriffe: " + g.getZugriffe());
 	}
 	
 	public static void main(String args[]){
