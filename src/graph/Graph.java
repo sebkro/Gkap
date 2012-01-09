@@ -21,6 +21,9 @@ public interface Graph {
 	public abstract void allEdgesZero();
 	public Pair<Graph,Double> fordFulkerson(String quelle, String senke);
 	public void setZugriffe(int i);
+	public String fleury();
+	public int eingangsgrad(String ecke);
+	public int ausgangsgrad(String ecke);
 	
 
 }

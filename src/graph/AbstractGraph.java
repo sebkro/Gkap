@@ -43,6 +43,16 @@ public abstract class AbstractGraph implements Graph {
 		
 	}
 	
+	private String poll(Set<String> x){
+		String result = null;
+		for(String elem : x){
+			result = elem;
+			x.remove(elem);
+			break;
+		}
+		return result;
+	}
+	
 	public Pair<List<String>, Double> dijkstra(String start, String end){
 		
 		List<String> resultList = new ArrayList<String>();
@@ -182,7 +192,7 @@ public abstract class AbstractGraph implements Graph {
 		residual.deleteZeroEdges();
 		Pair<List<String>, Double> dikstra = residual.dijkstra(quelle, senke);
 		
-		while(!(dikstra.getFirst().isEmpty())){
+		while(!(dikstra.getFirst().isEmpty())){ //gefundener Weg als Liste
 			
 			double smallestValue = Double.POSITIVE_INFINITY;
 			
@@ -235,7 +245,8 @@ public abstract class AbstractGraph implements Graph {
 		if(!(allNodes().contains(senke))) throw new IllegalArgumentException();
 		
 		Map<String,Pair<String,Double>> completed = new HashMap<String,Pair<String,Double>>();
-		Queue<String> queue = new LinkedList<String>();
+		//Queue<String> queue = new LinkedList<String>();
+		Set<String> randomQueue = new HashSet<String>();
 		
 		//FlussGraph als Kopie der OriginalGraphen
 		Graph flussGraph = Graphs.adjList(initialString());
@@ -252,14 +263,16 @@ public abstract class AbstractGraph implements Graph {
 			
 			//init wird bei jedem Teilschritt wiederholt
 			completed.put(quelle, Graphs.createPair("undef", Double.POSITIVE_INFINITY) );
-			queue.add(quelle);
+			//queue.add(quelle);
+			randomQueue.add(quelle);
 			
 			//eigentliche berechnung
 			
 			
-			while(!(queue.isEmpty())){
+			while(!(randomQueue.isEmpty())){
 				
-				String aktuell = queue.poll();
+				String aktuell = poll(randomQueue);
+				//String aktuell = queue.poll();
 				List<Nachbar> positiveNeighbors = new ArrayList<Nachbar>();
 				List<Pair<String,Double>> negativeNeighbors = new ArrayList<Pair<String,Double>>();
 				
@@ -284,9 +297,10 @@ public abstract class AbstractGraph implements Graph {
 				}
 				
 				
-				if(negativeNeighbors.isEmpty() && positiveNeighbors.isEmpty() && queue.isEmpty()){
+				if(negativeNeighbors.isEmpty() && positiveNeighbors.isEmpty() && randomQueue.isEmpty()){
 					finished = true;
-					queue.clear();
+					//queue.clear();
+					randomQueue.clear();
 				}
 				
 				double flussVorgaenger = Math.abs(completed.get(aktuell).getSecond());
@@ -302,10 +316,14 @@ public abstract class AbstractGraph implements Graph {
 						//elem in completed eintragen (mit Vorgaenger und Fluss)
 					
 						completed.put(elem.name(), Graphs.createPair(aktuell, flussAktuell));
-						queue.add(elem.name());
+						//queue.add(elem.name());
+						randomQueue.add(elem.name());
 						
 						//Abbruch der Schleife in naechsten Durchlauf, wenn senke gefunden
-						if(elem.name().equals(senke)) queue.clear();
+						if(elem.name().equals(senke)){
+							//queue.clear();
+							randomQueue.clear();
+						}
 					}
 						 
 				}
@@ -314,7 +332,8 @@ public abstract class AbstractGraph implements Graph {
 					double flussAktuell = flussGraph.weightBetween(elem.getFirst(), aktuell);
 					flussAktuell = Math.min(flussAktuell, flussVorgaenger); 
 					completed.put(elem.getFirst(), Graphs.createPair(aktuell, flussAktuell * (-1.0) ));
-					queue.add(elem.getFirst());
+					//queue.add(elem.getFirst());
+					randomQueue.add(elem.getFirst());
 				}
 				
 				
@@ -374,6 +393,12 @@ public abstract class AbstractGraph implements Graph {
 			result.add(it.previous());
 		}
 		return result;
+	}
+	
+	public String fleury(String start){
+		
+		Graph deleteGraph = Graphs.adjList(this.einleseString);
+		
 	}
 	
 	

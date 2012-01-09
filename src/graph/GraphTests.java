@@ -176,11 +176,34 @@ public class GraphTests {
 	}
 	
 	public static void fordFulkersonTest(){
-		String s = "q>x1:1;q>x2:1;q>x3:1;q>x4:1;x1>y1:1;x1>y2:1;x1>y4:1;x2>y1:1;x3>y3:1;x4>y4:1;y1>s:1;y2>s:1;y3>s:1;y4>s:1";
+		//String s = "q>x1:1;q>x2:1;q>x3:1;q>x4:1;x1>y1:1;x1>y2:1;x1>y4:1;x2>y1:1;x3>y3:1;x4>y4:1;y1>s:1;y2>s:1;y3>s:1;y4>s:1";
 		//String s = "q>v1:4;q>v2:2;v1>v3:2;v1>v4:3;v2>v4:3;v3>s:5;v4>s:1";
-		Graph g = Graphs.adjList(s);
+		String s = "q>w1:1;q>w2:1;q>w3:1;q>w4:1;w1>j1:1;w1>j2:1;w1>j3:1;w1>j4:1;w2>j1:1;w2>j2:1;w2>j3:1;w3>j1:1;w3>j2:1;w4>j1:1;j2>s:1;j3>s:1;j4>s:1;j1>s:1";
+		Graph g = Graphs.adjMatrix(s);
 		System.out.println(g.fordFulkerson("q", "s"));
 		System.out.println("Zugriffe: " + g.getZugriffe());
+	}
+	
+	public static void bfsTest(){
+		String s = "x1>x2:1";
+		Graph g = Graphs.adjList(s);
+		System.out.println(g.bfs("x1"));
+		
+	}
+	
+	public static void eckenGradTest(){
+		String s = "x1>x3:1;x1>x2:1;x2!x3:1;x3>x2:1";
+		Graph g1 = Graphs.adjMatrix(s);
+		Graph g2 = Graphs.adjList(s);
+		
+		System.out.println("x1-Eingangsgrade:");
+		System.out.println(g1.eingangsgrad("x1"));
+		System.out.println(g2.eingangsgrad("x1"));
+		
+		System.out.println("x1-Ausgangsgrade:");
+		System.out.println(g1.ausgangsgrad("x1"));
+		System.out.println(g2.ausgangsgrad("x1"));
+
 	}
 	
 	public static void main(String args[]){
@@ -196,7 +219,11 @@ public class GraphTests {
 		
 		//edgesReverseTest();
 		
-		fordFulkersonTest();
+		//fordFulkersonTest();
+		
+		//bfsTest();
+		
+		eckenGradTest();
 		
 		
 		

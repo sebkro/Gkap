@@ -220,6 +220,22 @@ public class AdjList extends AbstractGraph implements Graph  {
 	public void setZugriffe(int i) {
 		this.zugriffe = i;
 	}
+	
+	public int eingangsgrad(String ecke){
+		int result = 0;
+		for(String node: this.allNodes()){
+			for(Nachbar elem : this.neighbors(node)){
+				if(elem.name().equals(ecke)){
+					result ++;
+				}
+			}
+		}
+		return result;
+	}
+	
+	public int ausgangsgrad(String ecke){
+		return this.neighbors(ecke).size();
+	}
 
 	
 	
