@@ -143,15 +143,6 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 	public void setZugriffeNull(){
 		this.zugriffe = 0;
 	}
-	
-	
-	public static void main(String args[]){
-		Graph g1 = AdjMatrix.valueOf("v1-v2:8;v2-v3:7;v1-v1:4;v3-v2:2;v1-v4:9");
-		System.out.println(g1.bfs("v1"));
-		System.out.println(g1.noOfNodes());
-		System.out.println(g1.allNodes().toString());
-		
-	}
 
 
 	@Override
@@ -291,7 +282,6 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 	}
 
 
-	@Override
 	public void setZugriffe(int i) {
 		this.zugriffe = i;
 		
@@ -299,6 +289,33 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 	
 
 
+	public static void main(String args[]){
+		Graph g1 = AdjMatrix.valueOf("v1-v2:8;v2-v3:7;v1-v1:4;v3-v2:2;v1-v4:9");
+		System.out.println(g1.bfs("v1"));
+		System.out.println(g1.noOfNodes());
+		System.out.println(g1.allNodes().toString());
+		
+	}
+	
+	public int eingangsgrad(String ecke){
+		int result = 0;
+		for(Nachbar elem : this.neighbors(ecke)){
+			if(adjMatrix[accessMap.get(ecke)][accessMap.get(elem.name())] != Double.POSITIVE_INFINITY){
+				result++;
+			}
+		}
+		return result;
+	}
+	
+	public int ausgangsgrad(String ecke){
+		int result = 0;
+		for(Nachbar elem : this.neighbors(ecke)){
+			if(adjMatrix[accessMap.get(elem.name())][accessMap.get(ecke)] != Double.POSITIVE_INFINITY){
+				result++;
+			}
+		}
+		return result;
+	}
 
 }
 
