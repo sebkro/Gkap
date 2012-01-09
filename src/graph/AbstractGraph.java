@@ -396,9 +396,66 @@ public abstract class AbstractGraph implements Graph {
 	}
 	
 	public String fleury(String start){
+		if(!this.allNodes().contains(start)) return "Not such a node!";
+		if(!checkEulerNodes()) return "Not an Euler Graph";
 		
 		Graph deleteGraph = Graphs.adjList(this.einleseString);
+		StringBuffer result = new StringBuffer();
+		result.append(start);
+		String last = start;
+		boolean deleted = false;
+		while(!deleteGraph.isEmpty()){
+			List<Nachbar> l = deleteGraph.neighbors(last);
+			System.out.println("Result: " + result);
+			for(Nachbar n : l){
+				if(!istSchnittkante(last,n.name())){
+					result.append(n.name());
+					deleteGraph.deleteEdge(last, n.name());
+					last = n.name();
+					deleted = true;
+					break;
+				}
+			}
+			
+			if(!deleted){
+				System.out.println(deleteGraph);
+				System.out.println("last: " + last);
+				Nachbar n = l.get(0);
+				result.append(n.name());
+				deleteGraph.deleteEdge(last, n.name());
+				last = n.name();
+			}
+			deleted = false;
+		}
 		
+		return result.toString();
+		
+	}
+	
+	public boolean isEmpty(){
+		for(String elem : this.allNodes()){
+			if(!this.neighbors(elem).isEmpty()) return false;
+		}
+		return true;
+	}
+	
+	private boolean istSchnittkante(String start, String end){
+		double weight = this.weightBetween(start, end);
+		this.deleteEdge(start, end);
+		if(this.bfs(start).containsKey(end)){
+			this.insert(start, end, weight);
+			return true;
+		}
+		this.insert(start, end, weight);
+		return false;
+	}
+	
+	private boolean checkEulerNodes(){
+		for(String node: this.allNodes()){
+			if(this.eingangsgrad(node) != this.ausgangsgrad(node)) return false;
+		}
+		
+		return true;
 	}
 	
 	

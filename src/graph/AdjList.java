@@ -233,6 +233,35 @@ public class AdjList extends AbstractGraph implements Graph  {
 		return result;
 	}
 	
+	public void deleteEdge(String start, String end){
+		if(this.allNodes().contains(start)){
+			if(this.isNeighbor(end, start)){
+				List<Nachbar> l = this.internMap.get(start);
+				if(l.size() > 0){
+					int index = 0;
+					for(int i = 0; i < l.size(); i++){
+						if(l.get(i).name().equals(end)){
+							index = i;
+							break;
+						}
+					}
+					l.remove(index);
+					
+				}
+			}
+		}
+	}
+	
+	private boolean isNeighbor(String node1, String node2){
+		List<Nachbar> l = this.neighbors(node2);
+		for(Nachbar elem : l){
+			if(elem.name().equals(node1)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public int ausgangsgrad(String ecke){
 		return this.neighbors(ecke).size();
 	}

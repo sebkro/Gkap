@@ -203,8 +203,50 @@ public class GraphTests {
 		System.out.println("x1-Ausgangsgrade:");
 		System.out.println(g1.ausgangsgrad("x1"));
 		System.out.println(g2.ausgangsgrad("x1"));
+		
+		System.out.println("x2-Eingangsgrade:");
+		System.out.println(g1.eingangsgrad("x2"));
+		System.out.println(g2.eingangsgrad("x2"));
+		
+		System.out.println("x2-Ausgangsgrade:");
+		System.out.println(g1.ausgangsgrad("x2"));
+		System.out.println(g2.ausgangsgrad("x2"));
+		
+		System.out.println("x3-Eingangsgrade:");
+		System.out.println(g1.eingangsgrad("x3"));
+		System.out.println(g2.eingangsgrad("x3"));
+		
+		System.out.println("x3-Ausgangsgrade:");
+		System.out.println(g1.ausgangsgrad("x3"));
+		System.out.println(g2.ausgangsgrad("x3"));
+		
+		
 
 	}
+	
+	
+	public static void deleteEdgetest(){
+		String s = "x1>x3:1;x1>x2:1;x2!x3:1;x3>x2:1";
+		AdjList g = (AdjList)AdjList.valueOf(s);
+		System.out.println(g);
+		g.deleteEdge("x1", "x3");
+		System.out.println(g);
+		
+
+	}
+	
+	public static void fleuryTest(){
+		String s = "a!b:1;a!c:1;b!c:1";
+		Graph g1 = Graphs.adjList(s);
+		System.out.println(g1.fleury("a"));
+	}
+	
+	public static void schnittkanteTest(){
+		String s = "b!c:1;c>a:1";
+		Graph g = Graphs.adjList(s);
+		System.out.println(g.istSchnittkante("c", "a"));
+	}
+	
 	
 	public static void main(String args[]){
  
@@ -223,7 +265,13 @@ public class GraphTests {
 		
 		//bfsTest();
 		
-		eckenGradTest();
+		//eckenGradTest();
+		
+		//deleteEdgetest();
+		
+		//schnittkanteTest();
+		
+		fleuryTest();
 		
 		
 		
