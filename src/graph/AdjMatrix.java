@@ -300,7 +300,7 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 	public int eingangsgrad(String ecke){
 		int result = 0;
 		for(Nachbar elem : this.neighbors(ecke)){
-			if(adjMatrix[accessMap.get(ecke)][accessMap.get(elem.name())] != Double.POSITIVE_INFINITY){
+			if(adjMatrix[accessMap.get(elem.name())][accessMap.get(ecke)] != Double.POSITIVE_INFINITY){
 				result++;
 			}
 		}
@@ -310,7 +310,7 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 	public int ausgangsgrad(String ecke){
 		int result = 0;
 		for(Nachbar elem : this.neighbors(ecke)){
-			if(adjMatrix[accessMap.get(elem.name())][accessMap.get(ecke)] != Double.POSITIVE_INFINITY){
+			if(adjMatrix[accessMap.get(ecke)][accessMap.get(elem.name())] != Double.POSITIVE_INFINITY){
 				result++;
 			}
 		}
