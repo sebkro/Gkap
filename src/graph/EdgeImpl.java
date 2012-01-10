@@ -11,7 +11,7 @@ public class EdgeImpl implements Edge {
 		this.weight = weight;
 	}
 	
-	public Edge create(String node1, String node2, double weight){
+	public static Edge create(String node1, String node2, double weight){
 		return new EdgeImpl(node1,node2,weight);
 	}
 
@@ -30,6 +30,10 @@ public class EdgeImpl implements Edge {
 	@Override
 	public double weight() {
 		return this.weight;
+	}
+	
+	public String toString(){
+		return this.node1 + " " + this.node2 + " " + this.weight;
 	}
 
 }
