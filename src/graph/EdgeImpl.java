@@ -1,5 +1,8 @@
 package graph;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class EdgeImpl implements Edge {
 	private final String node1;
 	private final String node2;
@@ -22,8 +25,10 @@ public class EdgeImpl implements Edge {
 	}
 
 	@Override
-	public String[] st() {
-		String[] result = {node1,node2};
+	public Set<String> st() {
+		Set<String> result = new HashSet<String>();
+		result.add(node1);
+		result.add(node2);
 		return result;
 	}
 
@@ -34,6 +39,13 @@ public class EdgeImpl implements Edge {
 	
 	public String toString(){
 		return this.node1 + " " + this.node2 + " " + this.weight;
+	}
+	
+	public boolean equals(Object o){
+		if(! (o instanceof Edge)) return false;
+		Edge other = (Edge)o;
+		return this.st().containsAll(other.st()) && this.weight == other.weight();
+		
 	}
 
 }
