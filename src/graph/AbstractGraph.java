@@ -397,15 +397,19 @@ public abstract class AbstractGraph implements Graph {
 	
 	public String fleury(String start){
 		if(!this.allNodes().contains(start)) return "Graph does not contain this node!";
-		if(!checkEulerNodes()) return "Not an Euler Graph";
+		//if(!checkEulerNodes()) return "Not an Euler Graph";
 		
 		Graph deleteGraph = Graphs.adjList(this.einleseString);
 		StringBuffer result = new StringBuffer();
 		result.append(start);
 		String last = start;
+		System.out.println("Hallo");
+		System.out.println(start);
 		boolean deleted = false;
 		while(!deleteGraph.isEmpty()){
 			List<Nachbar> l = deleteGraph.neighbors(last);
+			System.out.println("Last: "+last);
+			System.out.println(deleteGraph);
 			for(Nachbar n : l){
 				if(deleteGraph.istSchnittkante(last,n.name()) == false){
 					result.append(n.name());
@@ -484,13 +488,23 @@ public abstract class AbstractGraph implements Graph {
 	}
 	
 	public String symmTSP(){
-		if(this.checkVollstaendig() == false) return "Illegal Graph";
-		if(this.hasDreiecksgleichung() == false) return "Illegal Dreiecksgleichung";
+		//if(this.checkVollstaendig() == false) return "Illegal Graph";
+		//if(this.hasDreiecksgleichung() == false) return "Illegal Dreiecksgleichung";
 		Graph g = this.minimalGeruest();
 		
-		g.doubleAllEdges();
+		g = g.doubleAllEdges();
 		
-		g.fleury(einleseString.substring(0, einleseString.indexOf("!")-1));
+		System.out.println(g);
+		
+		String s = g.fleury(einleseString.substring(0, einleseString.indexOf("!")));
+		
+		String result = "";
+		for(Character c : s.toCharArray()){
+			if(!(result.contains(String.valueOf(c)))){
+				result += c;
+			}
+		}
+		return result;
 	}
 	
 	

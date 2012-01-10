@@ -29,5 +29,7 @@ public interface Graph {
 	public boolean istSchnittkante(String s,String s2);
 	public List<Edge> allEdges();
 	public Graph minimalGeruest();
+	public Graph doubleAllEdges();
+	public String symmTSP();
 
 }

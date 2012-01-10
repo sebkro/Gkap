@@ -279,12 +279,14 @@ public class AdjList extends AbstractGraph implements Graph  {
 		return result;
 	}
 	
-	public void doubleAllEdges(){
+	public Graph doubleAllEdges(){
+		Graph result = Graphs.adjList(einleseString);
 		for(Map.Entry<String, List<Nachbar>> e : this.internMap.entrySet()){
 			for(Nachbar n : e.getValue()){
-				this.insert(e.getKey(), n.name(), n.weight());
+				result.insert(e.getKey(), n.name(), n.weight());
 			}
 		}
+		return result;
 	}
 
 	

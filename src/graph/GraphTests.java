@@ -241,8 +241,11 @@ public class GraphTests {
 		String s2 = "a!b:1";
 		String s3 = "a!b:1;b!c:1;a!f:1;c!d:1;d!e:1;e!f:1;a!e:1;a!c:1;c!e:1";
 		String s4 = "a!d:1;a!c:1;a!";
-		Graph g1 = Graphs.adjList(s2);
-		System.out.println(g1.fleury("a"));
+		String s5 = "a!b:1;a!b:1;a!c:1;a!c:1";
+		String s6 = "c!e:2;d!e:3;c!d:2;c!a:4;b!d:2;a!b:5;a!f:7;b!f:7";
+		Graph g1 = Graphs.adjList(s6);
+		System.out.println(g1.minimalGeruest().doubleAllEdges().fleury("a"));
+		//System.out.println(g1.fleury("a"));
 	}
 	
 	public static void schnittkanteTest(){
@@ -263,6 +266,12 @@ public class GraphTests {
 		String s = "c!e:2;d!e:3;c!d:2;c!a:4;b!d:2;a!b:5;a!f:7;b!f:7";
 		Graph g = Graphs.adjList(s);
 		System.out.println(g.minimalGeruest());
+	}
+	
+	public static void symmTSPTest(){
+		String s = "c!e:2;d!e:3;c!d:2;c!a:4;b!d:2;a!b:5;a!f:7;b!f:7";
+		Graph g = Graphs.adjList(s);
+		System.out.println(g.symmTSP());
 	}
 	
 	
@@ -294,7 +303,9 @@ public class GraphTests {
 		
 		//allEdgesTest();
 		
-		minimalGeruestTest();
+		//minimalGeruestTest();
+		
+		symmTSPTest();
 		
 		
 		
