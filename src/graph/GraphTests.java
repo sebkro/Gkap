@@ -239,8 +239,10 @@ public class GraphTests {
 		String s = "a!b:1;a!c:1;b!c:1";
 		String s1 = "a!f:1;b!f:1;a!c:1;a!d:1;a!b:1;b!c:1;b!d:1;d!e:1;d!c:1;c!e:1";
 		String s2 = "a!b:1";
+		String s3 = "a!b:1;b!c:1;a!f:1;c!d:1;d!e:1;e!f:1;a!e:1;a!c:1;c!e:1";
+		String s4 = "a!d:1;a!c:1;a!";
 		Graph g1 = Graphs.adjList(s2);
-		System.out.println(g1.fleury("c"));
+		System.out.println(g1.fleury("a"));
 	}
 	
 	public static void schnittkanteTest(){

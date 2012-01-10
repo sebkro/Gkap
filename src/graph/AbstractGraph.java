@@ -408,8 +408,6 @@ public abstract class AbstractGraph implements Graph {
 			List<Nachbar> l = deleteGraph.neighbors(last);
 			for(Nachbar n : l){
 				if(deleteGraph.istSchnittkante(last,n.name()) == false){
-					System.out.println("keine Schnittkarte: " + last + " " + n.name());
-					System.out.println(deleteGraph);
 					result.append(n.name());
 					deleteGraph.deleteEdge(last, n.name());
 					deleteGraph.deleteEdge(n.name(), last);
@@ -420,8 +418,6 @@ public abstract class AbstractGraph implements Graph {
 			}
 			
 			if(!deleted){
-				System.out.println(deleteGraph);
-				System.out.println("last: " + last);
 				Nachbar n = l.get(0);
 				result.append(n.name());
 				deleteGraph.deleteEdge(last, n.name());
@@ -458,7 +454,7 @@ public abstract class AbstractGraph implements Graph {
 	
 	private boolean checkEulerNodes(){
 		for(String node: this.allNodes()){
-			if(((this.eingangsgrad(node) + this.ausgangsgrad(node)) % 2) == 0) return false;
+			if((((this.eingangsgrad(node) + this.ausgangsgrad(node))/2) % 2) == 1) return false;
 		}
 		
 		return true;
