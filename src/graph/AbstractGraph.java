@@ -396,7 +396,7 @@ public abstract class AbstractGraph implements Graph {
 	}
 	
 	public String fleury(String start){
-		if(!this.allNodes().contains(start)) return "Not such a node!";
+		if(!this.allNodes().contains(start)) return "Graph does not contain this node!";
 		if(!checkEulerNodes()) return "Not an Euler Graph";
 		
 		Graph deleteGraph = Graphs.adjList(this.einleseString);
@@ -406,11 +406,13 @@ public abstract class AbstractGraph implements Graph {
 		boolean deleted = false;
 		while(!deleteGraph.isEmpty()){
 			List<Nachbar> l = deleteGraph.neighbors(last);
-			System.out.println("Result: " + result);
 			for(Nachbar n : l){
-				if(!istSchnittkante(last,n.name())){
+				if(deleteGraph.istSchnittkante(last,n.name()) == false){
+					System.out.println("keine Schnittkarte: " + last + " " + n.name());
+					System.out.println(deleteGraph);
 					result.append(n.name());
 					deleteGraph.deleteEdge(last, n.name());
+					deleteGraph.deleteEdge(n.name(), last);
 					last = n.name();
 					deleted = true;
 					break;
@@ -423,6 +425,7 @@ public abstract class AbstractGraph implements Graph {
 				Nachbar n = l.get(0);
 				result.append(n.name());
 				deleteGraph.deleteEdge(last, n.name());
+				deleteGraph.deleteEdge(n.name(), last);
 				last = n.name();
 			}
 			deleted = false;
@@ -439,24 +442,43 @@ public abstract class AbstractGraph implements Graph {
 		return true;
 	}
 	
-	private boolean istSchnittkante(String start, String end){
+	public boolean istSchnittkante(String start, String end){
 		double weight = this.weightBetween(start, end);
 		this.deleteEdge(start, end);
+		this.deleteEdge(end, start);
 		if(this.bfs(start).containsKey(end)){
 			this.insert(start, end, weight);
-			return true;
+			this.insert(end,start , weight);
+			return false;
 		}
 		this.insert(start, end, weight);
-		return false;
+		this.insert(end, start, weight);
+		return true;
 	}
 	
 	private boolean checkEulerNodes(){
 		for(String node: this.allNodes()){
-			if(this.eingangsgrad(node) != this.ausgangsgrad(node)) return false;
+			if(((this.eingangsgrad(node) + this.ausgangsgrad(node)) % 2) == 0) return false;
 		}
 		
 		return true;
 	}
+	
+//	public boolean istSchnittkante(String start, String end){
+//		double weight = this.weightBetween(start, end);
+//		this.deleteEdge(start, end);
+//		this.deleteEdge(end, start);
+//		if(this.bfs(start).containsKey(end) && this.bfs(end).containsKey(start)){
+//			this.insert(start, end, weight);
+//			this.insert(end,start , weight);
+//			return false;
+//		}
+//		this.insert(start, end, weight);
+//		this.insert(end, start, weight);
+//		return true;
+//	}
+//	
+	
 	
 	
 	

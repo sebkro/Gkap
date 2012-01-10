@@ -237,15 +237,21 @@ public class GraphTests {
 	
 	public static void fleuryTest(){
 		String s = "a!b:1;a!c:1;b!c:1";
-		Graph g1 = Graphs.adjList(s);
-		System.out.println(g1.fleury("a"));
+		String s1 = "a!f:1;b!f:1;a!c:1;a!d:1;a!b:1;b!c:1;b!d:1;d!e:1;d!c:1;c!e:1";
+		String s2 = "a!b:1";
+		Graph g1 = Graphs.adjList(s2);
+		System.out.println(g1.fleury("c"));
 	}
 	
 	public static void schnittkanteTest(){
 		String s = "b!c:1;c>a:1";
-		Graph g = Graphs.adjList(s);
-		System.out.println(g.istSchnittkante("c", "a"));
+		String s1 = "d!a:1;d!e:1;d!c:1;e!c:1";
+		String s2 = "a!d:1;c!d:1;d!e:1;c!e:1";
+		Graph g = Graphs.adjList(s2);
+		System.out.println(g.istSchnittkante("e", "d"));
 	}
+	
+	
 	
 	
 	public static void main(String args[]){
@@ -272,6 +278,8 @@ public class GraphTests {
 		//schnittkanteTest();
 		
 		fleuryTest();
+		
+		
 		
 		
 		
