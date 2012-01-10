@@ -460,6 +460,8 @@ public abstract class AbstractGraph implements Graph {
 		return true;
 	}
 	
+	
+	
 //	public boolean istSchnittkante(String start, String end){
 //		double weight = this.weightBetween(start, end);
 //		this.deleteEdge(start, end);
