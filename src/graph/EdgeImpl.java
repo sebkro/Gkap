@@ -18,21 +18,26 @@ public class EdgeImpl implements Edge {
 		return new EdgeImpl(node1,node2,weight);
 	}
 
-	@Override
 	public int compareTo(Edge e) {
 		return Double.compare(this.weight(),e.weight());
 		
 	}
 
-	@Override
 	public Set<String> st() {
 		Set<String> result = new HashSet<String>();
 		result.add(node1);
 		result.add(node2);
 		return result;
 	}
+	
+	public String getNode1(){
+		return this.node1;
+	}
+	
+	public String getNode2(){
+		return this.node2;
+	}
 
-	@Override
 	public double weight() {
 		return this.weight;
 	}
@@ -46,6 +51,13 @@ public class EdgeImpl implements Edge {
 		Edge other = (Edge)o;
 		return this.st().containsAll(other.st()) && this.weight == other.weight();
 		
+	}
+	
+	public int hashCode(){
+		int result = 1;
+		result = (int) (result * 7 * this.weight());
+		result = result * 13 * this.st().hashCode();
+		return result;
 	}
 
 }

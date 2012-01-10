@@ -76,6 +76,10 @@ public class Graphs {
 		
 	}
 	
+	public static Edge createEdge(String node1, String node2, double weight){
+		return EdgeImpl.create(node1, node2, weight);
+	}
+	
 	public static int indexTrenner(String s){
 		int indTrenner = s.indexOf("!");
 		if(indTrenner == -1){
@@ -85,10 +89,9 @@ public class Graphs {
 	}
 	
 	public static void main(String[] args){
-		String s = "v1-v2:8.999";
-		System.out.println(getFirst(s));
-		System.out.println(getSecond(s));
-		System.out.println(gewichtung(s));
+		String s = "v1>v2:3;v1>v3:8";
+		Graph g = AdjMatrix.valueOf(s);
+		System.out.println(g.neighbors("v1"));
 	}
 
 }

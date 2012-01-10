@@ -27,6 +27,7 @@ public interface Graph {
 	public void deleteEdge(String start, String end);
 	public boolean isEmpty();
 	public boolean istSchnittkante(String s,String s2);
-	
+	public List<Edge> allEdges();
+	public Graph minimalGeruest();
 
 }

@@ -83,14 +83,38 @@ public class NAG implements Graph{
 	public void allEdgesZero() {
 		
 	}
-	@Override
+	
 	public Pair<Graph,Double> fordFulkerson(String quelle, String senke) {
 		return Graphs.createPair(Graphs.nag,-1.0);
 	}
-	@Override
+	
 	public void setZugriffe(int i) {
 		// TODO Auto-generated method stub
 		
+	}
+	public String fleury(String start) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public int eingangsgrad(String ecke) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public int ausgangsgrad(String ecke) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public void deleteEdge(String start, String end) {
+		// TODO Auto-generated method stub
+		
+	}
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	public boolean istSchnittkante(String s, String s2) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

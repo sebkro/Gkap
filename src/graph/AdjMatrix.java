@@ -317,5 +317,16 @@ public class AdjMatrix extends AbstractGraph implements Graph{
 		return result;
 	}
 
+
+	public String fleury(String start){
+		Graph g = Graphs.adjList(einleseString);
+		return g.fleury(start);
+	}
+
+
+	public void deleteEdge(String start, String end) {
+		
+	}
+
 }
 

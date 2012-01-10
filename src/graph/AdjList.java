@@ -216,7 +216,7 @@ public class AdjList extends AbstractGraph implements Graph  {
 		}
 	}
 
-	@Override
+	
 	public void setZugriffe(int i) {
 		this.zugriffe = i;
 	}
@@ -265,8 +265,18 @@ public class AdjList extends AbstractGraph implements Graph  {
 	public int ausgangsgrad(String ecke){
 		return this.neighbors(ecke).size();
 	}
-
 	
-	
+	public List<Edge> allEdges(){
+		List<Edge> result = new ArrayList<Edge>();
+		for(Map.Entry<String, List<Nachbar>> entry : internMap.entrySet()){
+			for(Nachbar elem : entry.getValue()){
+				Edge e = Graphs.createEdge(entry.getKey(), elem.name(), elem.weight());
+				if(!(result.contains(e))){
+					result.add(e);
+				}
+			}
+		}
+		return result;
+	}
 	
 }

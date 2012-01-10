@@ -460,6 +460,39 @@ public abstract class AbstractGraph implements Graph {
 		return true;
 	}
 	
+	public Graph minimalGeruest(){
+		StringBuffer result = new StringBuffer();
+		Graph checkGraph = Graphs.adjList(einleseString);
+		
+		checkGraph.allEdgesZero();
+		checkGraph.deleteZeroEdges();
+		
+		List<Edge> l = this.allEdges();
+		
+		Collections.sort(l);
+		
+		for(Edge elem : l){
+			if(!(checkGraph.bfs(elem.getNode1()).containsKey(elem.getNode2()))){
+				checkGraph.insert(elem.getNode1(), elem.getNode2(), elem.weight());
+				checkGraph.insert(elem.getNode2(), elem.getNode1(), elem.weight());
+				String s = elem.getNode1()+"!"+elem.getNode2()+":"+elem.weight()+";";
+				result.append(s);
+			}
+		}
+		result.deleteCharAt((result.lastIndexOf(";")));
+		return Graphs.adjList(result.toString());
+	}
+	
+	public String symmTSP(){
+		if(this.checkVollstaendig() == false) return "Illegal Graph";
+		if(this.hasDreiecksgleichung() == false) return "Illegal Dreiecksgleichung";
+		Graph g = this.minimalGeruest();
+		
+		g.doubleAllEdges();
+		
+		g.fleury(einleseString.substring(0, einleseString.indexOf("!")-1));
+	}
+	
 	
 	
 //	public boolean istSchnittkante(String start, String end){

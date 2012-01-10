@@ -253,6 +253,17 @@ public class GraphTests {
 		System.out.println(g.istSchnittkante("e", "d"));
 	}
 	
+	public static void allEdgesTest(){
+		String s = "a!d:1;c!d:1;d!e:1;c!e:1";
+		Graph g = Graphs.adjList(s);
+		System.out.println(g.allEdges());	
+	}
+	
+	public static void minimalGeruestTest(){
+		String s = "c!e:2;d!e:3;c!d:2;c!a:4;b!d:2;a!b:5;a!f:7;b!f:7";
+		Graph g = Graphs.adjList(s);
+		System.out.println(g.minimalGeruest());
+	}
 	
 	
 	
@@ -279,7 +290,11 @@ public class GraphTests {
 		
 		//schnittkanteTest();
 		
-		fleuryTest();
+		//fleuryTest();
+		
+		//allEdgesTest();
+		
+		minimalGeruestTest();
 		
 		
 		
