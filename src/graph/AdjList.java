@@ -288,6 +288,18 @@ public class AdjList extends AbstractGraph implements Graph  {
 		}
 		return result;
 	}
+	
+	public String einleseString(){
+		StringBuffer result = new StringBuffer();
+		for(Map.Entry<String, List<Nachbar>> entry : this.internMap.entrySet()){
+			for(Nachbar n : entry.getValue()){
+				String s = entry.getKey() + ">" + n.name() + ":" + n.weight() + ";";
+				result.append(s);
+			}
+		}
+		result.deleteCharAt(result.length() -1);
+		return result.toString();
+	}
 
 	
 }

@@ -7,7 +7,7 @@ import java.util.*;
 
 public abstract class AbstractGraph implements Graph {
 	
-	protected String einleseString;
+	public String einleseString;
 	
 	protected static boolean checkElem(String s) {
 		
@@ -399,7 +399,8 @@ public abstract class AbstractGraph implements Graph {
 		if(!this.allNodes().contains(start)) return "Graph does not contain this node!";
 		//if(!checkEulerNodes()) return "Not an Euler Graph";
 		
-		Graph deleteGraph = Graphs.adjList(this.einleseString);
+		Graph deleteGraph = Graphs.adjList(this.einleseString());
+		System.out.println("DeleteGraph: " + deleteGraph);
 		StringBuffer result = new StringBuffer();
 		result.append(start);
 		String last = start;
@@ -407,6 +408,7 @@ public abstract class AbstractGraph implements Graph {
 		System.out.println(start);
 		boolean deleted = false;
 		while(!deleteGraph.isEmpty()){
+			System.out.println("Result " + result);
 			List<Nachbar> l = deleteGraph.neighbors(last);
 			System.out.println("Last: "+last);
 			System.out.println(deleteGraph);
@@ -489,7 +491,7 @@ public abstract class AbstractGraph implements Graph {
 	
 	public String symmTSP(){
 		//if(this.checkVollstaendig() == false) return "Illegal Graph";
-		//if(this.hasDreiecksgleichung() == false) return "Illegal Dreiecksgleichung";
+		//if(this.dreiecksgleichung() == false) return "Illegal Dreiecksgleichung";
 		Graph g = this.minimalGeruest();
 		
 		g = g.doubleAllEdges();
@@ -505,6 +507,21 @@ public abstract class AbstractGraph implements Graph {
 			}
 		}
 		return result;
+	}
+	
+	public boolean dreiecksGleichung(){
+		for(String s : this.allNodes()){
+			for(Nachbar n : this.neighbors(s)){
+				for(Nachbar n2 : this.neighbors(s)){
+					if(!n.equals(n2)){
+						if(weightBetween(s, n.name()) > weightBetween(s,n2.name()) + weightBetween(n2.name(),n.name())){
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
 	}
 	
 	

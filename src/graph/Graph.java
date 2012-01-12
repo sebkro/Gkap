@@ -31,5 +31,7 @@ public interface Graph {
 	public Graph minimalGeruest();
 	public Graph doubleAllEdges();
 	public String symmTSP();
+	public String einleseString();
+	public boolean dreiecksGleichung();
 
 }

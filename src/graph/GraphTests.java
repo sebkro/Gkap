@@ -235,6 +235,15 @@ public class GraphTests {
 
 	}
 	
+	public static void einleseStringTest(){
+		String s = "a!b:1;a>c:2;c>a:1";
+		Graph g = Graphs.adjList(s);
+		System.out.println(g.einleseString());
+		g.insert("a", "d", 1);
+		g.deleteEdge("a", "b");
+		System.out.println(g.einleseString());
+	}
+	
 	public static void fleuryTest(){
 		String s = "a!b:1;a!c:1;b!c:1";
 		String s1 = "a!f:1;b!f:1;a!c:1;a!d:1;a!b:1;b!c:1;b!d:1;d!e:1;d!c:1;c!e:1";
@@ -274,6 +283,12 @@ public class GraphTests {
 		System.out.println(g.symmTSP());
 	}
 	
+	public static void dreiecksGleichungTest(){
+		String s = "a!b:1;a!c:1;a!d:2;a!e:1;b!c:1;b!d:1;b!e:1;c!d:1;c!e:1;d!e:1";
+		Graph g = Graphs.adjList(s);
+		System.out.println(g.dreiecksGleichung());
+	}
+	
 	
 	
 	public static void main(String args[]){
@@ -305,7 +320,11 @@ public class GraphTests {
 		
 		//minimalGeruestTest();
 		
-		symmTSPTest();
+		//symmTSPTest();
+		
+		//einleseStringTest();
+		
+		dreiecksGleichungTest();
 		
 		
 		
