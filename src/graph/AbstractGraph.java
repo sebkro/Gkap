@@ -490,8 +490,7 @@ public abstract class AbstractGraph implements Graph {
 	}
 	
 	public String symmTSP(){
-		//if(this.checkVollstaendig() == false) return "Illegal Graph";
-		//if(this.dreiecksgleichung() == false) return "Illegal Dreiecksgleichung";
+		if(this.dreiecksGleichung() == false) return "Illegal Dreiecksgleichung";
 		Graph g = this.minimalGeruest();
 		
 		g = g.doubleAllEdges();
